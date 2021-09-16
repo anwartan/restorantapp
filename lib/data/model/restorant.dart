@@ -1,15 +1,18 @@
 import 'dart:convert';
-import 'package:restoranapp/menu.dart';
+import 'package:restoranapp/data/model/customer_review.dart';
+import 'package:restoranapp/data/model/item.dart';
+import 'package:restoranapp/data/model/menu.dart';
 
 class Restorant {
-  late String id;
-  late String name;
-  late String description;
-  late String pictureId;
-  late String city;
-  late double rating;
-  late Menu menu;
-
+  final String id;
+  final String name;
+  final String description;
+  final String pictureId;
+  final String city;
+  final double rating;
+  final Menu? menu;
+  final List<Item> category;
+  final List<CustomerReview> customerReview;
   Restorant({
     required this.id,
     required this.name,
@@ -17,7 +20,9 @@ class Restorant {
     required this.pictureId,
     required this.city,
     required this.rating,
-    required this.menu,
+    this.menu,
+    required this.category,
+    required this.customerReview
   });
 
   factory Restorant.fromJson(Map<String, dynamic> restorant) => Restorant(
@@ -28,6 +33,8 @@ class Restorant {
     city :restorant['city'],
     rating : restorant['rating'].toDouble(),
     menu : Menu.fromJson(restorant['menus']),
+    category: List<Item>.from(restorant['categories']?.map((x)=>Item.fromJson(x))??[]),
+    customerReview: List<CustomerReview>.from(restorant['customerReviews']?.map((x)=>CustomerReview.fromJson(x))??[])
   );
 
   Map<String,dynamic> toJson() => {
@@ -37,7 +44,7 @@ class Restorant {
     "pictureId" : pictureId,
     "city" : city,
     "rating" :  rating,
-    "menu": menu.toJson(),
+    "menu": menu?.toJson(),
   };
 }
 

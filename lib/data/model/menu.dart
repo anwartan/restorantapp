@@ -1,4 +1,4 @@
-import 'package:restoranapp/item.dart';
+import 'package:restoranapp/data/model/item.dart';
 
 class Menu{
    
@@ -8,9 +8,9 @@ class Menu{
         required this.foods,
         required this.drinks,
     });
-  factory Menu.fromJson(Map<String, dynamic> menu)=>Menu(
-    foods : List<Item>.from(menu['foods'].map((x)=>Item.fromJson(x))),
-    drinks : List<Item>.from(menu['drinks'].map((x)=>Item.fromJson(x)))
+  factory Menu.fromJson(Map<String, dynamic>? menu)=>Menu(
+    foods : List<Item>.from(menu?['foods'].map((x)=>Item.fromJson(x))??[]),
+    drinks : List<Item>.from(menu?['drinks'].map((x)=>Item.fromJson(x))??[])
   );
     Map<String, dynamic> toJson() => {
         "foods": List<dynamic>.from(foods.map((x) => x.toJson())),
